@@ -1,0 +1,141 @@
+<div class="wrapper row m-5 p-0">
+  <!-- Controls -->
+  <div class="left-section col-md-6 p-4">
+    <div class="body">
+      <h2 class="text-center">PhoneBook</h2>
+
+      <div *ngIf="!isUnique" class="alert alert-danger my-3 ">
+        Phone number already exists
+      </div>
+      <div class="container">
+        <form #userData="ngForm" (ngSubmit)="add(userData)" class="my-5">
+          <div class="form-group">
+            <input
+              class="form-control"
+              name="userName"
+              #Name="ngModel"
+              [(ngModel)]="userName"
+              placeholder="Username"
+              minlength="3"
+              autocomplete="off"
+              required
+            />
+            <div
+              *ngIf="Name.touched && Name.errors?.required"
+              class="alert alert-danger my-3 "
+            >
+              Please enter a valid name
+            </div>
+            <div
+              *ngIf="Name.touched && Name.errors?.minlength"
+              class="alert alert-danger my-3 "
+            >
+              Contact name should be more than 3 characters
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              name="userPhone"
+              #phone="ngModel"
+              [(ngModel)]="userPhone"
+              placeholder="Phone"
+              pattern="^01[0-9]{9}$"
+              autocomplete="off"
+              required
+            />
+            <div
+              *ngIf="phone.touched && phone.errors?.required"
+              class="alert alert-danger my-3 "
+            >
+              Please enter Phone number
+            </div>
+            <div
+              *ngIf="phone.touched && phone.errors?.pattern"
+              class="alert alert-danger my-3 "
+            >
+              Phone number should be in this foramt: 01x xxxx xxxx
+            </div>
+          </div>
+          <div class="my-3 text-center">
+            <button
+              type="submit"
+              class="btn px-5"
+              [disabled]="userData.invalid"
+            >
+              Add Contact
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- List Of Contacts -->
+  <div class="right-section col-md-6 p-4">
+    <div class="container">
+      <div class="w-100 m-3">
+        <input
+          class="form-control"
+          [(ngModel)]="term"
+          name="term"
+          placeholder="Search by name or phone"
+        />
+      </div>
+      <table class="table m-3 table-striped table-sm">
+        <thead class="thead-dark">
+          <tr class="text-center">
+            <th>Name</th>
+            <th>Phone</th>
+            <th class="px-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let u of usersContainer | search: term"
+            class="text-center"
+          >
+            <td *ngIf="!u.isEditing">{{ u.name }}</td>
+            <td *ngIf="u.isEditing">
+              <input type="text" [(ngModel)]="u.name" />
+            </td>
+            <td *ngIf="u.isEditing">
+              <input type="text" [(ngModel)]="u.phone" />
+            </td>
+
+            <td *ngIf="!u.isEditing">{{ u.phone }}</td>
+
+            <td class="text-right">
+              <button
+                *ngIf="!u.isEditing"
+                (click)="edit(u)"
+                class="btn btn-sm btn-primary mx-1"
+              >
+                <fa-icon [icon]="icons.faPen"></fa-icon>
+              </button>
+
+              <button
+                *ngIf="!u.isEditing"
+                id="remove"
+                (click)="delete(u)"
+                class="btn btn-sm btn-danger mx-1"
+              >
+                <fa-icon [icon]="icons.faTrash"></fa-icon>
+              </button>
+
+              <button
+                *ngIf="u.isEditing"
+                (click)="update(u)"
+                class="btn btn-sm btn-success mx-1"
+              >
+                <fa-icon [icon]="icons.faCheck"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

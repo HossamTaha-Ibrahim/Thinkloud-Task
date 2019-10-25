@@ -1,0 +1,35 @@
+.wrapper {
+  box-shadow: 1px 1px 4px 0 #f0f0f0, -1px -1px 4px 0 #f0f0f0;
+}
+
+.left-section {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.left-section button {
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+  margin-top: 2rem;
+}
+
+.left-section button:hover {
+  background-color: #12181f;
+  border-color: #1d2124;
+}
+
+.left-section input {
+  border: 1px solid #313131;
+  background: #292e32;
+  color: #aaa;
+}
+
+.left-section .alert {
+  color: #f5f5f5;
+  background-color: #a72935;
+  border: none;
+}
+.right-section {
+  background-color: #fff;
+}
